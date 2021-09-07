@@ -5,13 +5,26 @@ import { Drawing } from '../Interfaces/drawing';
 import styles from '../styles/drawingBoard.module.css';
 import { CircularProgress } from '@material-ui/core';
 
+export type DrawingCardContextType = {
+    items: Drawing[],
+    setItems: (drawingCard: Drawing[]) => void
+  }
+  export const DrawingCardContext = React.createContext<DrawingCardContextType | null>(null);
 
 function DrawingBoard() {
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<Drawing[]>([]);
-
+    // const [drawingCard, setDrawingCard] = useState<Drawing>({
+    //     id: 0,
+    //     arist_id: 0,
+    //     date_creation: undefined,
+    //     url: "",
+    //     title: undefined,
+    //     medium: undefined,
+    //     category: undefined
+    //   })
     // Remarque : le tableau vide de dépendances [] indique
     // que useEffect ne s’exécutera qu’une fois, un peu comme
     // componentDidMount()
@@ -40,9 +53,9 @@ function DrawingBoard() {
                     if (result.error !== undefined) {
                         setError(result.error);
                     }
-                    else {
-                        items.map(item => (console.log(item.id)))
-                    }
+                    // else {
+                    //     items.map(item => (console.log(item.id)))
+                    // }
                 },
                 (error) => {
                     setIsLoaded(true);
@@ -60,15 +73,17 @@ function DrawingBoard() {
         return <CircularProgress disableShrink />;
     } else {
         return (
+            <DrawingCardContext.Provider value={{ items, setItems }}>
             <div className={styles.drawingBoard}>
 
-                {items.map(item => (
+                {items.map((item : Drawing, index : number) => (
                     <div key={item.id} className={styles.Board}>
-                        <DrawingCard title={item.title} url={item.url}></DrawingCard>
+                        <DrawingCard index={index}></DrawingCard>
                     </div>
                 ))}
 
             </div>
+            </DrawingCardContext.Provider>
         );
     };
 }

@@ -1,0 +1,10 @@
+.drawingBoard {
+    text-align: center;
+    /* background-color: rgb(214, 166, 166); */
+}
+
+.Board {
+    display: inline-block;
+    display: inline;
+    float: left;
+}

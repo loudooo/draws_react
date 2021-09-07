@@ -1,0 +1,16 @@
+.drawing_card {
+    background-color: azure;
+    border-radius: 5px;
+    color: DodgerBlue;
+    text-align: center;
+    margin: 5px;
+    transition: all .3s;
+    padding: 15px;
+    /* display: inline-block;
+    display: inline; */
+    /* float: left; */
+}
+
+.drawing_card:hover {
+    
+}

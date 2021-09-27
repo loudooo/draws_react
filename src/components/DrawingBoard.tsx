@@ -64,7 +64,15 @@ function DrawingBoard() {
             )
     }, [])
 
-    console.log(items);
+    const renderMap = ()=> {
+        let map=items.map((item : Drawing, index : number) => {
+        return(
+            <DrawingCard  key={item.id} index={index}/>
+        )
+        }
+    )
+    return map
+    }
     // let json_drawings = getAllDrawingsByArtistId(0);
     // console.log(json_drawings);
     if (error) {
@@ -72,19 +80,14 @@ function DrawingBoard() {
     } else if (!isLoaded) {
         return <CircularProgress disableShrink />;
     } else {
-        return (
+        
+      return(
             <DrawingCardContext.Provider value={{ items, setItems }}>
-            <div className={styles.drawingBoard}>
-
-                {items.map((item : Drawing, index : number) => (
-                    <div key={item.id} className={styles.Board}>
-                        <DrawingCard index={index}></DrawingCard>
-                    </div>
-                ))}
-
-            </div>
+                   <div style={{height:'auto',width:'100%'}}>
+               {renderMap()}
+               </div>
             </DrawingCardContext.Provider>
-        );
+      )
     };
 }
 

@@ -13,11 +13,9 @@ function DrawingCard(props: {
     console.log("drawingCard",items);
  
     return (
-        <div className={styles.drawing_card} >
-
-            <Image imageStyle={{ width: '100px', height: '200px' }} src={first_url + items[props.index].url} alt={items[props.index].title} />
-
-        </div>
+      
+            <Image style={{ minWidth: '10vw',width:'15vw',maxWidth:'20vw',height:'auto',float:'left',display:'flex'}} src={first_url + items[props.index].url} alt={items[props.index].title} />
+         
     );
 }
 

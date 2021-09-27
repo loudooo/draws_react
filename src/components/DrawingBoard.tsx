@@ -3,7 +3,10 @@ import DrawingCard from './DrawingCard';
 import { getAllDrawingsByArtistId } from '../fetch/fetchFunctions';
 import { Drawing } from '../Interfaces/drawing';
 import styles from '../styles/drawingBoard.module.css';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress} from '@material-ui/core';
+import Image from 'material-ui-image'
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
 export type DrawingCardContextType = {
     items: Drawing[],
@@ -16,6 +19,7 @@ function DrawingBoard() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState<Drawing[]>([]);
+    const first_url = "http://www.lesminimoys.fr/presentation_dessins/IMG/resize_drawings_ludo/"
     // const [drawingCard, setDrawingCard] = useState<Drawing>({
     //     id: 0,
     //     arist_id: 0,
@@ -64,10 +68,21 @@ function DrawingBoard() {
             )
     }, [])
 
+    function srcset(image : any, size : number, rows = 1, cols = 1) {
+        return {
+          src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+          srcSet: `${image}?w=${size * cols}&h=${
+            size * rows
+          }&fit=crop&auto=format&dpr=2 2x`,
+        };
+      }
+
     const renderMap = ()=> {
         let map=items.map((item : Drawing, index : number) => {
         return(
-            <DrawingCard  key={item.id} index={index}/>
+            <ImageListItem key={item.id} cols={1} rows={1}>
+            <Image   {...srcset(first_url + item.url, 121, 1, 1)} imageStyle={{height:'200px',width:'200px'}} style={{display:'flex',float:'left'}}   src={first_url + item.url} alt={item.title} loading="lazy" />
+            </ImageListItem>
         )
         }
     )
@@ -83,9 +98,16 @@ function DrawingBoard() {
         
       return(
             <DrawingCardContext.Provider value={{ items, setItems }}>
-                   <div style={{height:'auto',width:'100%'}}>
+        <ImageList
+            variant="quilted"
+            style={{ width: '100%', height: '90vh' }}
+            cols={4}
+            rowHeight={121}
+          >
+               
                {renderMap()}
-               </div>
+               
+               </ImageList>
             </DrawingCardContext.Provider>
       )
     };

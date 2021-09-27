@@ -14,8 +14,8 @@ function DrawingCard(props: {
  
     return (
       
-            <Image style={{ minWidth: '10vw',width:'15vw',maxWidth:'20vw',height:'auto',float:'left',display:'flex'}} src={first_url + items[props.index].url} alt={items[props.index].title} />
-         
+            <Image src={first_url + items[props.index].url} alt={items[props.index].title} />
+       
     );
 }
 

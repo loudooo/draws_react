@@ -20,7 +20,7 @@ function App() {
       };
     }
   
-    const [, setWindowSize] = useState<PropsWindow>(getSize);
+    const [windowSize, setWindowSize] = useState<PropsWindow>(getSize);
   
     //effet de bord pour readapter la height en fonction de l'ecran
     useEffect(() => {
@@ -38,7 +38,7 @@ function App() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Empty array ensures that effect is only run on mount and unmount
   return (
-    <Container className="App" style={{width:'100%',height:'auto'}}>
+    <Container className="App" style={{width:windowSize.width,height:windowSize.height}}>
         <DrawingBoard />
     </Container>
   );

@@ -6,4 +6,6 @@ export interface Drawing {
     title?: string,
     medium?: string,
     category?: string,
+    row?: number,
+    col?: number,
 }

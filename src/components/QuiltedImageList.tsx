@@ -70,6 +70,18 @@ export default function QuiltedImageList() {
     // fontFamily: "Arial",
     
   };
+  const handleMouseEnter = (index:number) => {
+    let obj:Drawing[]=[...items];
+    obj[index].isHovering=true;
+    setItems(obj);
+  };
+
+  const handleMouseLeave = (index : number) => {
+    let obj:Drawing[]=[...items];
+    obj[index].isHovering=false;
+    setItems(obj);
+  };
+ 
   return (
     <ImageList style={{ maxWidth: '1300px' }}
       sx={{ width: window.innerWidth, height: window.innerHeight }}
@@ -77,15 +89,20 @@ export default function QuiltedImageList() {
       cols={nb_col}
       rowHeight={160}
     >
-      {items.map((item) => (
-        <ImageListItem key={item.id} cols={item.col || 1} rows={item.row || 1} style={mystyle}>
+      {items.map((item : Drawing, index : number) => {
+      
+        return(
+        <ImageListItem key={item.id} cols={item.col || 1} rows={item.row || 1}>
           <img
+              style={{transform: `${item.isHovering ? 'scale(1.5,1.5)' : null}`}}
+             onMouseEnter={()=>handleMouseEnter(index)}
+             onMouseLeave={()=>handleMouseLeave(index)}
             {...srcset(first_url + item.url, 160, item.col, item.row)}
             alt={item.title}
             loading="lazy"
           />
         </ImageListItem>
-      ))}
+      )})}
     </ImageList>
   );
 }

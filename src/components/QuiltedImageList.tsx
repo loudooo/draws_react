@@ -106,34 +106,32 @@ export default function QuiltedImageList() {
   
           return (
 
-            <ImageListItem className="yo" key={item.id} cols={item.col || 1} rows={item.row || 1}>
+            <ImageListItem   onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={() => handleMouseLeave(index)} key={item.id} cols={item.col || 1} rows={item.row || 1}>
               {!item.isHovering &&<img
                 //style={{transform: `${item.isHovering ? 'scale(1.5,1.5)' : null}`}}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave(index)}
                 {...srcset(first_url + item.url, 160, item.col, item.row)}
-                alt={item.title}
-                loading="lazy"
+               
+                
               />}
-              {/* {item.isHovering &&<p style={style_title}>{item.title} </p>}
+              {item.isHovering &&<p style={style_title}>{item.title} </p>}
               {item.isHovering &&<img 
-                style={{opacity:0.1,display:"block"}}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave(index)}
+                style={{opacity:0.1}}
+              
                 {...srcset(first_url + item.url, 160, item.col, item.row)}
-                alt={item.title}
-                loading="lazy"
-              />} */}
-              {item.isHovering &&<LightTooltip arrow placement='top-end'title={item.title ?  <React.Fragment>
+              />}
+              {/* {item.isHovering &&<LightTooltip arrow placement='top-end'title={item.title ?  <React.Fragment>
               <div>{item.title}</div></React.Fragment> : <React.Fragment>
               <div>{""}</div></React.Fragment>}><img 
                 style={{opacity:0.1,display:"block"}}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave(index)}
                 {...srcset(first_url + item.url, 160, item.col, item.row)}
-                alt={item.title}
-                loading="lazy"
-              /></LightTooltip>}
+               
+               
+              /></LightTooltip>} */}
               
               
             </ImageListItem>

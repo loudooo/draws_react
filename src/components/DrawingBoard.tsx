@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DrawingCard from './DrawingCard';
-import { getAllDrawingsByArtistId } from '../fetch/fetchFunctions';
+import { getAllDrawingsByArtistId, url } from '../fetch/fetchFunctions';
 import { Drawing } from '../Interfaces/drawing';
 import styles from '../styles/drawingBoard.module.css';
 import { CircularProgress } from '@material-ui/core';
@@ -30,7 +30,7 @@ function DrawingBoard() {
     // componentDidMount()
     useEffect(() => {
         const artist_id = 0;
-        const url = "http://www.lesminimoys.fr/presentation_dessins/PHP/";
+        
 
         fetch(url + 'getDrawingsByArtistId.php',
             {

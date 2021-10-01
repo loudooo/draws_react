@@ -1,5 +1,5 @@
 
-const url = "http://www.lesminimoys.fr/presentation_dessins/PHP/";
+export const url = process.env.REACT_APP_DOMAIN;
 
 export const getAllDrawingsByArtistId = async (artist_id: number) => {
 

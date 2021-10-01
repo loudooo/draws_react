@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styles from '../styles/drawingCard.module.css';
 import Image from 'material-ui-image'
 import { DrawingCardContext, DrawingCardContextType } from './DrawingBoard';
 
@@ -10,12 +9,9 @@ function DrawingCard(props: {
 }): any {
 
     const {items} = useContext(DrawingCardContext) as DrawingCardContextType;
-    console.log("drawingCard",items);
- 
+    
     return (
-      
             <Image src={first_url + items[props.index].url} alt={items[props.index].title} />
-       
     );
 }
 

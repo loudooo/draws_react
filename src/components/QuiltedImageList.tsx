@@ -3,8 +3,9 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Drawing } from '../Interfaces/drawing';
 import useWindowDimensions from '../utils/getWindowDimensions';
-import { Tooltip } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardMedia, TextField, Tooltip, Typography } from '@mui/material';
 import { withStyles } from "@material-ui/core/styles";
+import { Label } from '@material-ui/icons';
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -66,10 +67,14 @@ export default function QuiltedImageList() {
     // fontFamily: "Arial",
   };
   const style_title = {
-    display: "block",
-    margin: 20,
-    color: "red",
-    border: "1px"
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    color: "black",
+    width: '100%',
+    fontSize: "200%"
+
   };
   const handleMouseEnter = (index: number) => {
     let obj: Drawing[] = [...items];
@@ -86,58 +91,55 @@ export default function QuiltedImageList() {
   };
   // console.log(document.getElementsByClassName("yo"));
 
-  const LightTooltip = withStyles(theme => ({
-    tooltip: {
-      backgroundColor: theme.palette.common.white,
-      color: "green",
-      boxShadow: theme.shadows[1],
-      fontSize: 25
-    }
-  }))(Tooltip);
-  
+
   return (
-    <ImageList style={{ maxWidth: '1300px'}}
+    <ImageList style={{ maxWidth: '1300px' }}
       sx={{ width: window.innerWidth, height: window.innerHeight }}
       variant="quilted"
       cols={nb_col}
       rowHeight={160}
     >
       {items.map((item: Drawing, index: number) => {
-  
-          return (
 
-            <ImageListItem   onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={() => handleMouseLeave(index)} key={item.id} cols={item.col || 1} rows={item.row || 1}>
-              {!item.isHovering &&<img
-                //style={{transform: `${item.isHovering ? 'scale(1.5,1.5)' : null}`}}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave(index)}
-                {...srcset(first_url + item.url, 160, item.col, item.row)}
-               
-                
-              />}
-              {item.isHovering &&<p style={style_title}>{item.title} </p>}
-              {item.isHovering &&<img 
-                style={{opacity:0.1}}
-              
-                {...srcset(first_url + item.url, 160, item.col, item.row)}
-              />}
-              {/* {item.isHovering &&<LightTooltip arrow placement='top-end'title={item.title ?  <React.Fragment>
-              <div>{item.title}</div></React.Fragment> : <React.Fragment>
-              <div>{""}</div></React.Fragment>}><img 
-                style={{opacity:0.1,display:"block"}}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave(index)}
-                {...srcset(first_url + item.url, 160, item.col, item.row)}
-               
-               
-              /></LightTooltip>} */}
-              
-              
-            </ImageListItem>
-          )
-       
-    
+        const variable: any = item.row ? Math.round(item.row * 0.5) : 1
+
+        return (
+          <>
+            {!item.isHovering && <ImageListItem
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)} key={item.id} cols={item.col || 1} rows={item.row || 1}>
+              <Card style={{ height: item.row }}>
+                <CardMedia
+                  component="img"
+                  style={{ objectFit: 'cover', zIndex: 1 }}
+                  {...srcset(first_url + item.url, 160, item.col, item.row)}
+                  title={item.title}
+                />
+              </Card>
+
+            </ImageListItem>}
+            {item.isHovering && <ImageListItem
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)} key={item.id} cols={item.col || 1} rows={item.row || 1}>
+              <Card style={{ height: item.row }}>
+                <CardMedia
+                  component="img"
+                  style={{ opacity: 0.4, objectFit: 'inherit', zIndex: 2 }}
+                  {...srcset(first_url + item.url, 160, item.col, item.row)}
+                  title={item.title}
+                />
+                <CardContent style={{ zIndex: 3, position: "absolute", bottom: '5%', left: 0, right: 0, top: 0 }}>
+                  <Typography gutterBottom component="label">
+                    {item.title}
+                  </Typography>
+                  <Typography component="p">
+                    ta mère
+                  </Typography>
+                </CardContent>
+              </Card>
+            </ImageListItem>}
+          </>
+        )
       })}
     </ImageList>
   );

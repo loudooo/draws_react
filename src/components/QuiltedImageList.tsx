@@ -3,6 +3,8 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { Drawing } from '../Interfaces/drawing';
 import useWindowDimensions from '../utils/getWindowDimensions';
+import { Tooltip } from '@mui/material';
+import { withStyles } from "@material-ui/core/styles";
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
   return {
@@ -62,14 +64,12 @@ export default function QuiltedImageList() {
     // backgroundColor: "DodgerBlue",
     // padding: "2px",
     // fontFamily: "Arial",
-
   };
   const style_title = {
-    color: 'red',
-    border: '1px solid #1890ff',
-    top:'50px',
-    fontSize:'20px',
-    MarginBottom:'20px',
+    display: "block",
+    margin: 20,
+    color: "red",
+    border: "1px"
   };
   const handleMouseEnter = (index: number) => {
     let obj: Drawing[] = [...items];
@@ -86,6 +86,15 @@ export default function QuiltedImageList() {
   };
   // console.log(document.getElementsByClassName("yo"));
 
+  const LightTooltip = withStyles(theme => ({
+    tooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: "green",
+      boxShadow: theme.shadows[1],
+      fontSize: 25
+    }
+  }))(Tooltip);
+  
   return (
     <ImageList style={{ maxWidth: '1300px'}}
       sx={{ width: window.innerWidth, height: window.innerHeight }}
@@ -94,33 +103,43 @@ export default function QuiltedImageList() {
       rowHeight={160}
     >
       {items.map((item: Drawing, index: number) => {
-        if (!item.isHovering) {
+  
           return (
 
             <ImageListItem className="yo" key={item.id} cols={item.col || 1} rows={item.row || 1}>
-              <img
-                // style={{transform: `${item.isHovering ? 'scale(1.5,1.5)' : null}`}}
+              {!item.isHovering &&<img
+                //style={{transform: `${item.isHovering ? 'scale(1.5,1.5)' : null}`}}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave(index)}
                 {...srcset(first_url + item.url, 160, item.col, item.row)}
                 alt={item.title}
                 loading="lazy"
-              />
-              <span style={style_title}>{item.title} </span>
+              />}
+              {/* {item.isHovering &&<p style={style_title}>{item.title} </p>}
+              {item.isHovering &&<img 
+                style={{opacity:0.1,display:"block"}}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={() => handleMouseLeave(index)}
+                {...srcset(first_url + item.url, 160, item.col, item.row)}
+                alt={item.title}
+                loading="lazy"
+              />} */}
+              {item.isHovering &&<LightTooltip arrow placement='top-end'title={item.title ?  <React.Fragment>
+              <div>{item.title}</div></React.Fragment> : <React.Fragment>
+              <div>{""}</div></React.Fragment>}><img 
+                style={{opacity:0.1,display:"block"}}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={() => handleMouseLeave(index)}
+                {...srcset(first_url + item.url, 160, item.col, item.row)}
+                alt={item.title}
+                loading="lazy"
+              /></LightTooltip>}
+              
+              
             </ImageListItem>
           )
-        }
-        else return (
-          <ImageListItem className="yo" key={item.id} cols={item.col || 1} rows={item.row || 1}>
-            <img
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={() => handleMouseLeave(index)}
-              {...srcset(first_url + item.url, 160, item.col, item.row)}
-              alt={item.title}
-              loading="lazy"
-            />
-
-          </ImageListItem>)
+       
+    
       })}
     </ImageList>
   );

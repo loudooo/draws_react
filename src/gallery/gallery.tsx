@@ -6,6 +6,7 @@ import { photos } from "./photos";
 import { Drawing } from '../Interfaces/drawing';
 import { url } from '../fetch/fetchFunctions';
 import { hoverImg } from '../utils/hoverImg'
+import SelectedImage from './SelectedImage';
 
 
 function getTabDrawings(tab: Drawing[]) {
@@ -59,7 +60,27 @@ function GalleryComp({ }) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState<Drawing[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
 
+  const toggleSelectAll = () => {
+    setSelectAll(!selectAll);
+  };
+
+  const imageRenderer = useCallback(
+    ({ index, left,direction,top, key, photo }) => (
+      <SelectedImage
+        selected={selectAll ? true : false}
+        key={key}
+        margin={2}
+        direction={direction}
+        index={index}
+        photo={photo}
+        left={left}
+        top={top}
+      />
+    ),
+    [selectAll]
+  );
 
   useEffect(() => {
     const artist_id = 0;
@@ -99,16 +120,23 @@ function GalleryComp({ }) {
   return (
     <div className={"board"} style={{position:"relative"}}>
       <h2>Using with a Lightbox component</h2>
-      <Gallery photos={final_items} onClick={openLightbox} />
+      {/* <Gallery photos={final_items} onClick={openLightbox} /> */}
+    <div>
+      <Gallery photos={final_items} renderImage={imageRenderer} />
+    </div>
+  
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
             <Carousel
               currentIndex={currentImage}
-              views={final_items.map(x => ({
+              views={final_items.map((x:any) => ({
                 ...x,
                 srcset: x.srcSet,
                 caption: x.alt || "",
+                alt:{},
+                src:x.src
+
               }))}
             />
           </Modal>

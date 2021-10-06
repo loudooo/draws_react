@@ -2,8 +2,6 @@ import { Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import './App.css';
 import ButtonAppBar from './components/ButtonAppBar';
-import DrawingBoard from './components/DrawingBoard';
-import QuiltedImageList from './components/QuiltedImageList';
 import GalleryComp from './gallery/gallery';
 
 interface PropsWindow {

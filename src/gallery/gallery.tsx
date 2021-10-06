@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
-import { photos } from "./photos";
 import { Drawing } from '../Interfaces/drawing';
 import { url } from '../fetch/fetchFunctions';
 import { hoverImg } from '../utils/hoverImg'
@@ -120,7 +119,7 @@ function GalleryComp({ }) {
   return (
     <div className={"board"} style={{position:"relative"}}>
       <h2>Using with a Lightbox component</h2>
-      {/* <Gallery photos={final_items} onClick={openLightbox} /> */}
+      <Gallery photos={final_items} onClick={openLightbox} />
     <div>
       <Gallery photos={final_items} renderImage={imageRenderer} />
     </div>

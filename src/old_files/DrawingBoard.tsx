@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DrawingCard from './DrawingCard';
-import { getAllDrawingsByArtistId, url } from '../fetch/fetchFunctions';
+import { url } from '../fetch/fetchFunctions';
 import { Drawing } from '../Interfaces/drawing';
 import styles from '../styles/drawingBoard.module.css';
 import { CircularProgress } from '@material-ui/core';

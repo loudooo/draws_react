@@ -1,51 +1,26 @@
 import { Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 
-const Checkmark : React.FC<{selected:any}> = ({ selected }) => (
-  <div
-    style={
-      selected
-        ? { left: "4px", top: "4px", position: "absolute", zIndex: 1 }
-        : { display: "none" }
-    }
-  >
-    <svg
-      style={{ fill: "white", position: "absolute" }}
-      width="24px"
-      height="24px"
-    >
-      <circle cx="12.5" cy="12.2" r="8.292" />
-    </svg>
-    <svg
-      style={{ fill: "#06befa", position: "absolute" }}
-      width="24px"
-      height="24px"
-    >
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-    </svg>
-  </div>
-);
-
-const imgStyle = {
-  transition: "transform .135s cubic-bezier(0.0,0.0,0.2,1),opacity linear .15s"
-};
-const selectedImgStyle = {
-  transform: "translateZ(0px) scale3d(0.9, 0.9, 1)",
-  transition: "transform .135s cubic-bezier(0.0,0.0,0.2,1),opacity linear .15s"
-};
+// const imgStyle = {
+//   transition: "transform .135s cubic-bezier(0.0,0.0,0.2,1),opacity linear .15s"
+// };
+// const selectedImgStyle = {
+//   transform: "translateZ(0px) scale3d(0.9, 0.9, 1)",
+//   transition: "transform .135s cubic-bezier(0.0,0.0,0.2,1),opacity linear .15s"
+// };
 const cont = {
   backgroundColor: "#eee",
   cursor: "pointer",
   overflow: "hidden",
   position: "relative",
-  left:0,
-  right:0,
-  top:0,
-  height:0,
-  width:0
+  left: 0,
+  right: 0,
+  top: 0,
+  height: 0,
+  width: 0
 };
 
-const SelectedImage : React.FC<{index:number,photo:any,margin:number,direction:string,top:any,left:any,selected:any}> = ({
+const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direction: string, top: any, left: any, selected: any }> = ({
   index,
   photo,
   margin,
@@ -58,7 +33,7 @@ const SelectedImage : React.FC<{index:number,photo:any,margin:number,direction:s
   //calculate x,y scale
   const sx = (100 - (30 / photo.width) * 100) / 100;
   const sy = (100 - (30 / photo.height) * 100) / 100;
-  selectedImgStyle.transform = `translateZ(0px) scale3d(${sx}, ${sy}, 1)`;
+  // selectedImgStyle.transform = `translateZ(0px) scale3d(${sx}, ${sy}, 1)`;
 
   if (direction === "column") {
     cont['position'] = "absolute";
@@ -66,9 +41,9 @@ const SelectedImage : React.FC<{index:number,photo:any,margin:number,direction:s
     cont['top'] = top;
   }
 
-//   const handleOnClick = (e:any) => {
-//     setIsSelected(!isSelected);
-//   };
+  //   const handleOnClick = (e:any) => {
+  //     setIsSelected(!isSelected);
+  //   };
 
   useEffect(() => {
     setIsSelected(selected);
@@ -76,48 +51,48 @@ const SelectedImage : React.FC<{index:number,photo:any,margin:number,direction:s
 
   const handleMouseEnter = (index: number) => {
     setIsSelected(!isSelected);
+    console.log('enter', index)
   };
 
   const handleMouseLeave = (index: number) => {
     setIsSelected(!isSelected);
+    console.log('leave', index)
   };
   return (
-   <div
-    //   style={{ margin, height:photo.height, width:photo.width, ...cont }}
+    <div
+      //   style={{ margin, height:photo.height, width:photo.width, ...cont }}
       className={!isSelected ? "not-selected" : ""}
     >
       {/* <Checkmark selected={isSelected ? true : false} /> */}
-     {isSelected ? <div style={{position:"relative"}}>
-      <span style={{color:"white",backgroundColor:"grey",bottom:"3vh", left: "4vw",zIndex:500,position:"absolute"}}>{photo.title}</span>
-      <img
-      title={photo.title}
-        alt={photo.title}
-        style={
-          isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
-        }
-        {...photo}
-        onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleMouseLeave}
-        
-      />
-     
-     </div>
-     : <div style={{position:"relative"}}>
-      <img
-      title={photo.title}
-        alt={photo.title}
-        style={
-          isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
-        }
-        {...photo}
-        onMouseLeave={handleMouseLeave}
-        onMouseEnter={handleMouseLeave}
-        
-      />
-     
-     </div>}
-     
-      <style>{`.not-selected:hover{outline:2px solid #06befa}`}</style>
+      {isSelected ? <div style={{ position: "relative" }}>
+        <span style={{ color: "white", backgroundColor: "blue", bottom: "3vh", left: "4vw", zIndex: 500, position: "absolute" }}>{photo.title}</span>
+        <img
+          title={photo.title}
+          alt={photo.title}
+          // style={
+          //   isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
+          // }
+          {...photo}
+          onMouseLeave={handleMouseLeave}
+          onMouseEnter={handleMouseEnter}
+
+        />
+
+      </div>
+        : <div style={{ position: "relative" }}>
+          <img
+            title={photo.title}
+            alt={photo.title}
+            // style={
+            //   isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
+            // }
+            {...photo}
+            onMouseLeave={handleMouseLeave}
+            onMouseEnter={handleMouseEnter}
+
+          />
+
+        </div>}
     </div>
   );
 };

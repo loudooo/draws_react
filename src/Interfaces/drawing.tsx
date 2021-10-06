@@ -8,5 +8,7 @@ export interface Drawing {
     category?: string,
     row?: number,
     col?: number,
+    width:number,
+    height:number,
     isHovering?:boolean
 }

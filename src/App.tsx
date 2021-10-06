@@ -1,10 +1,10 @@
-
 import { Container } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import './App.css';
 import ButtonAppBar from './components/ButtonAppBar';
 import DrawingBoard from './components/DrawingBoard';
 import QuiltedImageList from './components/QuiltedImageList';
+import GalleryComp from './gallery/gallery';
 
 interface PropsWindow {
   width: number | undefined,
@@ -40,9 +40,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty array ensures that effect is only run on mount and unmount
   return (
-    <Container className="App" style={{ width: windowSize.width, height: windowSize.height, marginLeft: 0,backgroundColor:"black"}}>
+    <Container className="App" style={{backgroundColor:"black"}}>
       <ButtonAppBar/>
-      <QuiltedImageList width={windowSize.width ? windowSize.width : 0 } height={windowSize.height ? windowSize.height : 0 }/>
+      <GalleryComp/>
+      {/* <QuiltedImageList width={windowSize.width ? windowSize.width : 0 } height={windowSize.height ? windowSize.height : 0 }/> */}
     </Container>
   );
 }

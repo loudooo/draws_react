@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { url } from '../fetch/fetchFunctions';
-import { Drawing } from '../Interfaces/drawing';
+import { Drawing } from '../interfaces/drawing';
 
 function getTabDrawings(tab: Drawing[]) {
   let final_tab: { alt: string | undefined; height: number; width: number; src: string; srcSet: string[]; key: string; }[] = [];

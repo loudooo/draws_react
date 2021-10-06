@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 
 // const imgStyle = {
@@ -45,38 +45,50 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
   //     setIsSelected(!isSelected);
   //   };
 
-  useEffect(() => {
-    setIsSelected(selected);
-  }, [selected]);
+  // useEffect(() => {
+  //   setIsSelected(selected);
+  // }, [selected]);
 
-  const handleMouseEnter = (index: number) => {
-    setIsSelected(!isSelected);
+  const handleMouseEnter = () => {
+    setIsSelected(true);
     console.log('enter', index)
   };
 
-  const handleMouseLeave = (index: number) => {
-    setIsSelected(!isSelected);
+  const handleMouseLeave = () => {
+    setIsSelected(false);
     console.log('leave', index)
   };
   return (
     <div
+    onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}
       //   style={{ margin, height:photo.height, width:photo.width, ...cont }}
       className={!isSelected ? "not-selected" : ""}
     >
       {/* <Checkmark selected={isSelected ? true : false} /> */}
       {isSelected ? <div style={{ position: "relative" }}>
-        <span style={{ color: "white", backgroundColor: "blue", bottom: "3vh", left: "4vw", zIndex: 500, position: "absolute" }}>{photo.title}</span>
-        <img
-          title={photo.title}
-          alt={photo.title}
-          // style={
-          //   isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
-          // }
-          {...photo}
-          onMouseLeave={handleMouseLeave}
-          onMouseEnter={handleMouseEnter}
+        {/* <span style={{ color: "white", backgroundColor: "blue", bottom: "3vh", left: "4vw", zIndex: 500, position: "absolute" }}>{photo.title}</span> */}
+        <Card style={{ height: 'auto' }} >
+          <img
+            title={photo.title}
+            alt={photo.title}
+            // style={
+            //   isSelected ? { ...imgStyle, ...selectedImgStyle } : { ...imgStyle }
+            // }
+            style={{ opacity: 0.4, objectFit: 'cover' }}
+            {...photo}
 
-        />
+
+          />
+          <CardContent style={{ zIndex: 3, position: "absolute", bottom: '5%', left: 0, right: 0, top: 0 }}>
+            <Typography gutterBottom component="label" style={{ fontWeight: 'bold' }}>
+              {photo.title}
+            </Typography>
+            <Typography component="p">
+              ta mère
+            </Typography>
+          </CardContent>
+        </Card>
+
 
       </div>
         : <div style={{ position: "relative" }}>
@@ -93,7 +105,7 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
           />
 
         </div>}
-    </div>
+    </div >
   );
 };
 

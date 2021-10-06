@@ -1,4 +1,4 @@
-import { Drawing } from "../Interfaces/drawing";
+import { Drawing } from "../interfaces/drawing";
 
 function getInfos(tab: Drawing[], url_to_compare: string): any {
     const format_url_to_compare = url_to_compare.slice(url_to_compare.lastIndexOf('/') + 1);

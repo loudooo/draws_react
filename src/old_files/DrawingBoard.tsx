@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import DrawingCard from './DrawingCard';
 import { url } from '../fetch/fetchFunctions';
-import { Drawing } from '../Interfaces/drawing';
 import styles from '../styles/drawingBoard.module.css';
 import { CircularProgress } from '@material-ui/core';
+import { Drawing } from '../interfaces/drawing';
 
 export type DrawingCardContextType = {
     items: Drawing[],

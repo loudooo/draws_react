@@ -2,13 +2,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
-import { Drawing } from '../Interfaces/drawing';
+import { Drawing } from '../interfaces/drawing';
 import { url } from '../fetch/fetchFunctions';
 import { hoverImg } from '../utils/hoverImg'
 import SelectedImage from './SelectedImage';
 
 
-function getTabDrawings(tab: Drawing[]) {
+function getTabDrawings(tab: Drawing[]) : any {
   let final_tab: { alt: string | undefined; height: number; width: number; src: string; srcSet: string[]; key: string; title: string | undefined; date: Date | undefined }[] = [];
   const first_url_orig = "http://www.lesminimoys.fr/presentation_dessins/IMG/resize_drawings_ludo/"
   const first_url = "http://www.lesminimoys.fr/presentation_dessins/IMG/drawings_ludo/"
@@ -60,7 +60,7 @@ function GalleryComp({ }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState<Drawing[]>([]);
   const [selectAll, setSelectAll] = useState(false);
-
+  const [final_items,setFinal_Items] = useState<any[]>([])
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
   };
@@ -110,16 +110,20 @@ function GalleryComp({ }) {
         }
       )
   }, [])
-  const final_items = getTabDrawings(items);
-  console.log(final_items);
+
+  useEffect (()=> {
+    setFinal_Items(getTabDrawings(items))
+  },[items])
+ 
+  // console.log(final_items);
   const map_url_id = getMapIndexSrc(items);
-  console.log(map_url_id);
+  // console.log(map_url_id);
   hoverImg(items, map_url_id);
 
   return (
     <div className={"board"} style={{position:"relative"}}>
-      <h2>Using with a Lightbox component</h2>
-      <Gallery photos={final_items} onClick={openLightbox} />
+      {/* <h2>Using with a Lightbox component</h2> */}
+      {/* <Gallery photos={final_items} onClick={openLightbox} /> */}
     <div>
       <Gallery photos={final_items} renderImage={imageRenderer} />
     </div>

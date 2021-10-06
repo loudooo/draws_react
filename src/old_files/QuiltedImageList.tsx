@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import { Drawing } from '../Interfaces/drawing';
+import { Drawing } from '../interfaces/drawing';
 // import useWindowDimensions from '../utils/getWindowDimensions';
 import { Card,CardContent, CardMedia,Typography} from '@mui/material';
 

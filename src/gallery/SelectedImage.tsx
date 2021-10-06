@@ -1,5 +1,6 @@
 import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import Carousel, { ModalGateway,Modal } from "react-images";
 
 // const imgStyle = {
 //   transition: "transform .135s cubic-bezier(0.0,0.0,0.2,1),opacity linear .15s"
@@ -20,16 +21,23 @@ const cont = {
   width: 0
 };
 
-const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direction: string, top: any, left: any, selected: any }> = ({
+const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direction: string, top: any, left: any, selected: any,photos : any}> = ({
   index,
   photo,
   margin,
   direction,
   top,
   left,
-  selected
+  selected,
+  photos
 }) => {
+
+  const [isHovering,setIsHovering] = useState(false);
   const [isSelected, setIsSelected] = useState(selected);
+  const [viewerIsOpen, setViewerIsOpen] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  
+  console.log("phtos",photos)
   //calculate x,y scale
   const sx = (100 - (30 / photo.width) * 100) / 100;
   const sy = (100 - (30 / photo.height) * 100) / 100;
@@ -41,31 +49,37 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
     cont['top'] = top;
   }
 
-  //   const handleOnClick = (e:any) => {
-  //     setIsSelected(!isSelected);
-  //   };
-
+    const handleOnClick = (e:any) => {
+      setIsSelected(!isSelected);
+    };
+    const openLightbox = useCallback(() => {
+      setViewerIsOpen(!viewerIsOpen);
+    }, []);
+  
+    const closeLightbox = () => {
+      setViewerIsOpen(!viewerIsOpen);
+     
+    };
   // useEffect(() => {
   //   setIsSelected(selected);
   // }, [selected]);
 
   const handleMouseEnter = () => {
-    setIsSelected(true);
-    console.log('enter', index)
+    setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
-    setIsSelected(false);
-    console.log('leave', index)
+    setIsHovering(false);
   };
   return (
+    <>
     <div
-    onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}  onClick={closeLightbox}
       //   style={{ margin, height:photo.height, width:photo.width, ...cont }}
       className={!isSelected ? "not-selected" : ""}
     >
       {/* <Checkmark selected={isSelected ? true : false} /> */}
-      {isSelected ? <div style={{ position: "relative" }}>
+      {isHovering ? <div style={{ position: "relative" }}>
         {/* <span style={{ color: "white", backgroundColor: "blue", bottom: "3vh", left: "4vw", zIndex: 500, position: "absolute" }}>{photo.title}</span> */}
         <Card style={{ height: 'auto' }} >
           <img
@@ -76,8 +90,7 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
             // }
             style={{ opacity: 0.4, objectFit: 'cover' }}
             {...photo}
-
-
+           
           />
           <CardContent style={{ zIndex: 3, position: "absolute", bottom: '5%', left: 0, right: 0, top: 0 }}>
             <Typography gutterBottom component="label" style={{ fontWeight: 'bold' }}>
@@ -88,7 +101,7 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
             </Typography>
           </CardContent>
         </Card>
-
+      
 
       </div>
         : <div style={{ position: "relative" }}>
@@ -105,7 +118,28 @@ const SelectedImage: React.FC<{ index: number, photo: any, margin: number, direc
           />
 
         </div>}
+
     </div >
+    {viewerIsOpen ? (<ModalGateway>
+       
+         <Modal onClose={closeLightbox} closeOnBackdropClick={true} closeOnEsc={true}>
+           <Carousel
+             currentIndex={index}
+             views={photos.map((x:any) => ({
+               ...x,
+               key:x.id,
+               srcset: x.srcSet,
+               caption: x.alt || "",
+               alt:"",
+               src:x.src
+
+             }))}
+           />
+         </Modal>
+        
+       
+     </ModalGateway>) : null}
+     </>
   );
 };
 
